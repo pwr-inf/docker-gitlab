@@ -420,7 +420,12 @@ production: &base
             client_id: '{{OAUTH_AZURE_API_KEY}}',
             client_secret: '{{OAUTH_AZURE_API_SECRET}}',
             tenant_id: '{{OAUTH_AZURE_TENANT_ID}}' } }
-
+      - { name: 'engine_oauth2',
+          args: {
+            client_id: '{{OAUTH_ENGINE_CLIENT_ID}}',
+            client_secret: '{{OAUTH_ENGINE_CLIENT_SECRET}}',
+            scope:  '{{OAUTH_ENGINE_SCOPE}}',
+            client_options:   { site:  '{{OAUTH_ENGINE_SITE}}'  } } }
     # SSO maximum session duration in seconds. Defaults to CAS default of 8 hours.
     # cas3:
     #   session_duration: 28800

@@ -22,13 +22,14 @@ services:
 
   gitlab:
     restart: always
-    image: sameersbn/gitlab:8.11.4
+#    image: sameersbn/gitlab:8.11.4
+    build: .
     depends_on:
     - redis
     - postgresql
     ports:
-    - "10080:80"
-    - "10022:22"
+    - "50080:80"
+    - "50022:22"
     volumes:
     - /srv/docker/gitlab/gitlab:/home/git/data:Z
     environment:
@@ -50,9 +51,9 @@ services:
     - GITLAB_HTTPS=false
     - SSL_SELF_SIGNED=false
 
-    - GITLAB_HOST=localhost
-    - GITLAB_PORT=10080
-    - GITLAB_SSH_PORT=10022
+    - GITLAB_HOST=iron.engine.kdm.wcss.pl
+    - GITLAB_PORT=50080
+    - GITLAB_SSH_PORT=50022
     - GITLAB_RELATIVE_URL_ROOT=
     - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alphanumeric-string
     - GITLAB_SECRETS_SECRET_KEY_BASE=long-and-random-alphanumeric-string
@@ -89,7 +90,7 @@ services:
     - IMAP_STARTTLS=false
 
     - OAUTH_ENABLED=false
-    - OAUTH_AUTO_SIGN_IN_WITH_PROVIDER=
+    - OAUTH_AUTO_SIGN_IN_WITH_PROVIDER=engine_oauth2
     - OAUTH_ALLOW_SSO=
     - OAUTH_BLOCK_AUTO_CREATED_USERS=true
     - OAUTH_AUTO_LINK_LDAP_USER=false
@@ -120,6 +121,16 @@ services:
 
     - OAUTH_GITLAB_API_KEY=
     - OAUTH_GITLAB_APP_SECRET=
+
+    - OAUTH_ENGINE_CLIENT_ID=gitlab
+    - OAUTH_ENGINE_CLIENT_SECRET=gitlabsecret
+    - OAUTH_ENGINE_SCOPE=openid
+    - OAUTH_ENGINE_SITE=https://sso.datasciencegroup.pl/
+    - OAUTH_ENABLED=true
+    - OAUTH_BLOCK_AUTO_CREATED_USERS=false
+    - OAUTH_ALLOW_SSO=engine_oauth2
+    - GITLAB_SIGNUP_ENABLED=false
+
 
     - OAUTH_BITBUCKET_API_KEY=
     - OAUTH_BITBUCKET_APP_SECRET=

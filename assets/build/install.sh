@@ -94,6 +94,10 @@ if [[ -d ${GEM_CACHE_DIR} ]]; then
   mv ${GEM_CACHE_DIR} ${GITLAB_INSTALL_DIR}/vendor/cache
   chown -R ${GITLAB_USER}: ${GITLAB_INSTALL_DIR}/vendor/cache
 fi
+
+echo 'gem "omniauth-engine-oauth2", :git => "https://github.com/pwr-inf/omniauth-engine-oauth2"' >> ${GITLAB_INSTALL_DIR}/Gemfile
+exec_as_git bundle install -j$(nproc) --no-deployment --path vendor/bundle --without development test aws
+# exec_as_git git commit -m "add engine oauth"  Gemfile Gemfile.lock
 exec_as_git bundle install -j$(nproc) --deployment --without development test aws
 
 # make sure everything in ${GITLAB_HOME} is owned by ${GITLAB_USER} user
